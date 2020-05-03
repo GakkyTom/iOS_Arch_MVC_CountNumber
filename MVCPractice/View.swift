@@ -13,6 +13,7 @@ class View: UIView {
     let label = UILabel()
     let minusButton = UIButton()
     let plusButton = UIButton()
+    let labelBackground = UIView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,40 +29,70 @@ class View: UIView {
     }
     
     private func setSubView() {
-        
+        addSubview(labelBackground)
         addSubview(label)
         addSubview(minusButton)
         addSubview(plusButton)
         
         label.textAlignment = .center
+        label.textColor = UIColor.white
         
-        label.backgroundColor = .blue
-        minusButton.backgroundColor = .red
-        plusButton.backgroundColor = .green
+        labelBackground.backgroundColor = UIColor.init(hex: "3158C7")
+        labelBackground.layer.cornerRadius = 10
+        labelBackground.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        labelBackground.layer.shadowColor = UIColor.black.cgColor
+        labelBackground.layer.shadowOpacity = 0.5
+        
+        minusButton.setTitle("-", for: .normal)
+        plusButton.setTitle("+", for: .normal)
+        
+        minusButton.setTitleColor(UIColor.init(hex: "3158C7"), for: .normal)
+        minusButton.setTitleColor(UIColor.init(hex: "7296DF"), for: .focused)
 
-        minusButton.setTitle("-1", for: .normal)
-        plusButton.setTitle("+1", for: .normal)
+        plusButton.setTitleColor(UIColor.init(hex: "3158C7"), for: .normal)
+        plusButton.setTitleColor(UIColor.init(hex: "7296DF"), for: .focused)
     }
     
+    // 制約周りはこの記事がわかりやすい
+    // https://www.avanderlee.com/swift/auto-layout-programmatically/
+    // https://qiita.com/yucovin/items/4bebcc7a8b1088b374c9
     private func setLayout() {
         label.translatesAutoresizingMaskIntoConstraints = false
+        labelBackground.translatesAutoresizingMaskIntoConstraints = false
         plusButton.translatesAutoresizingMaskIntoConstraints = false
         minusButton.translatesAutoresizingMaskIntoConstraints = false
         
-        label.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        label.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: minusButton.topAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: plusButton.topAnchor).isActive = true
-        label.heightAnchor.constraint(equalTo: minusButton.heightAnchor).isActive = true
-        label.heightAnchor.constraint(equalTo: plusButton.heightAnchor).isActive = true
+        let labelConstraints = [
+            label.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            label.widthAnchor.constraint(equalToConstant: 50),
+            label.heightAnchor.constraint(equalToConstant: 50),
+        ]
         
-        minusButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        plusButton.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        minusButton.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        minusButton.rightAnchor.constraint(equalTo: plusButton.leftAnchor).isActive = true
-        plusButton.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        minusButton.widthAnchor.constraint(equalTo: plusButton.widthAnchor).isActive = true
-        
+        let labelBackgroundConstraints = [
+            labelBackground.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            labelBackground.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            labelBackground.widthAnchor.constraint(equalToConstant: 50),
+            labelBackground.heightAnchor.constraint(equalToConstant: 50)
+        ]
+
+        let plusButtonConstraints = [
+            plusButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            plusButton.leadingAnchor.constraint(equalTo: label.trailingAnchor),
+            plusButton.widthAnchor.constraint(equalToConstant: 50),
+            plusButton.heightAnchor.constraint(equalToConstant: 50)
+        ]
+
+        let minusButtonConstraints = [
+            minusButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            minusButton.trailingAnchor.constraint(equalTo: label.leadingAnchor),
+            minusButton.widthAnchor.constraint(equalToConstant: 50),
+            minusButton.heightAnchor.constraint(equalToConstant: 50)
+        ]
+
+        NSLayoutConstraint.activate(labelConstraints)
+        NSLayoutConstraint.activate(minusButtonConstraints)
+        NSLayoutConstraint.activate(plusButtonConstraints)
+        NSLayoutConstraint.activate(labelBackgroundConstraints)
     }
 }
