@@ -29,6 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
+        // 外部から ViewController に Model を渡している
         viewController.myModel = Model()
     }
 

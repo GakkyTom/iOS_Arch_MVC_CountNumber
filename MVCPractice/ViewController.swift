@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // SceneDelegate(外部) から Model をもらう
     var myModel: Model? {
         didSet {
             registerModel()
@@ -21,12 +22,6 @@ class ViewController: UIViewController {
     override func loadView() {
         view = myView
     }
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//
-//    }
     
     deinit {
         myModel?.notificationCenter.removeObserver(self)
