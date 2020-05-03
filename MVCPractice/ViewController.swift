@@ -44,11 +44,25 @@ class ViewController: UIViewController {
     }
     
     @objc func onMinusTapped() {
-        myModel?.countDown()
+        UIView.animate(withDuration: 0.1, animations: {
+            self.myView.label.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+        }) { (true) in
+            UIView.animate(withDuration: 0.1) {
+                self.myModel?.countDown()
+                self.myView.label.transform = .identity
+            }
+        }
     }
     
     @objc func onPlusTapped() {
-        myModel?.countUp()
+        UIView.animate(withDuration: 0.1, animations: {
+            self.myView.label.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
+        }) { (true) in
+            UIView.animate(withDuration: 0.1) {
+                self.myModel?.countUp()
+                self.myView.label.transform = .identity
+            }
+        }
     }
 
 }
